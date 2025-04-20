@@ -139,6 +139,10 @@ getBounds.vglm <- function(object, ...) {
   c(-Inf, coefs[seq_len(ncat(object) - 1)] - coefs[1L], Inf)
 }
 
+#' @keywords internal
+getBounds.gam <- function(object, ...) {
+    c(-Inf, object$family$getTheta(TRUE), Inf)
+}
 
 ################################################################################
 # Generic function for extracting the assumed cumulative distribution function
@@ -209,6 +213,12 @@ getDistributionFunction.vglm <- function(object) {
          "loglog" = pgumbel,
          "cloglog" = pGumbel,
          "cauchit" = pcauchy)
+}
+
+#' @keywords internal
+getDistributionFunction.gam <- function(object) {
+  switch(sub("\\(.*\\)$", "", object$family$family),
+         "Ordered Categorical" = plogis)
 }
 
 
@@ -283,6 +293,11 @@ getDistributionName.vglm <- function(object) {
          "cauchit" = "cauchy")
 }
 
+#' @keywords internal
+getDistributionName.gam <- function(object) {
+  switch(sub("\\(.*\\)$", "", object$family$family),
+         "Ordered Categorical" = "logis")
+}
 
 ################################################################################
 # Generic function for extracting the fitted probabilities from a cumulative
@@ -335,6 +350,10 @@ getFittedProbs.vglm <- function(object) {
   object@fitted.values
 }
 
+#' @keywords internal
+getFittedProbs.gam <- function(object) {
+  predict(object, type="response")
+}
 
 ################################################################################
 # Generic function for extracting the fitted mean response from a cumulative
@@ -400,6 +419,9 @@ getMeanResponse.vglm <- function(object) {
   }
 }
 
+getMeanResponse.gam <- function(object) {
+  fitted(object)
+}
 
 ################################################################################
 # Generic function for extracting the assumed quantile function from a
@@ -472,6 +494,11 @@ getQuantileFunction.vglm <- function(object) {
          "cauchit" = qcauchy)
 }
 
+#' @keywords internal
+getQuantileFunction.gam <- function(object) {
+  switch(sub("\\(.*\\)$", "", object$family$family),
+         "Ordered Categorical" = qlogis)
+}
 
 ################################################################################
 # Generic function to extract the response values from a cumulative link or
@@ -520,6 +547,10 @@ getResponseValues.vglm <- function(object, ...) {
   unname(apply(object@y, MARGIN = 1, FUN = function(x) which(x == 1)))
 }
 
+#' @keywords internal
+getResponseValues.gam <- function(object, ...) {
+  object$y
+}
 
 ################################################################################
 # Number of response categories
@@ -566,6 +597,11 @@ ncat.vglm <- function(object) {
   length(attributes(object)$extra$colnames.y)
 }
 
+#' @keywords internal
+ncat.gam <- function(object) {
+  object$family$n.theta+2
+}
+
 
 ################################################################################
 # Surrogate and residual workhorse functions
@@ -593,7 +629,9 @@ generate_surrogate <- function(object, method = c("latent", "jitter"),
         boot_id <- seq_along(y)
       }
       mean_response <- getMeanResponse(object)  # mean response values
-      if (!inherits(object, what = "lrm") && inherits(object, what = "glm")) {
+      if (!inherits(object, what = "lrm") &&
+          !inherits(object, what = "gam") &&
+          inherits(object, what = "glm")) {
         sim_trunc(n = length(y), distribution = distribution,
                   # {0, 1} -> {1, 2}
                   a = ifelse(y[boot_id] == 1, yes = -Inf, no = 0),
@@ -666,6 +704,7 @@ generate_residuals <- function(object, method = c("latent", "jitter"),
       }
       mean_response <- getMeanResponse(object)  # mean response values
       s <- if (!inherits(object, what = "lrm") &&
+               !inherits(object, what = "gam") &&
                inherits(object, what = "glm")) {
         sim_trunc(n = length(y), distribution = distribution,
                   # {0, 1} -> {1, 2}

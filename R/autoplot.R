@@ -339,3 +339,9 @@ autoplot.polr <- autoplot.clm
 #'
 #' @export
 autoplot.vglm <- autoplot.clm
+
+
+#' @rdname autoplot.resid
+#'
+#' @export
+autoplot.gam <- autoplot.clm

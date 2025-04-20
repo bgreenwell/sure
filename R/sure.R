@@ -4,8 +4,8 @@
 #' The \code{sure} package provides surrogate-based residuals for fitted ordinal
 #' and general (e.g., binary) regression models of class
 #' \code{\link[ordinal]{clm}}, \code{\link[stats]{glm}}, \code{\link[rms]{lrm}},
-#' \code{\link[rms]{orm}}, \code{\link[MASS]{polr}}, or
-#' \code{\link[VGAM]{vglm}}.
+#' \code{\link[rms]{orm}}, \code{\link[MASS]{polr}},
+#' \code{\link[VGAM]{vglm}}, \code{\link[mgcv]{gam}}.
 #'
 #' The development version can be found on GitHub:
 #' \url{https://github.com/AFIT-R/sure}. As of right now, \code{sure} exports the

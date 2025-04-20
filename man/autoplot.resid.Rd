@@ -8,6 +8,7 @@
 \alias{autoplot.orm}
 \alias{autoplot.polr}
 \alias{autoplot.vglm}
+\alias{autoplot.gam}
 \title{Residual plots}
 \usage{
 autoplot.resid(
@@ -167,6 +168,32 @@ autoplot.polr(
 )
 
 autoplot.vglm(
+  object,
+  what = c("qq", "fitted", "covariate"),
+  x = NULL,
+  fit = NULL,
+  distribution = qnorm,
+  ncol = NULL,
+  alpha = 1,
+  xlab = NULL,
+  color = "#444444",
+  shape = 19,
+  size = 2,
+  qqpoint.color = "#444444",
+  qqpoint.shape = 19,
+  qqpoint.size = 2,
+  qqline.color = "#888888",
+  qqline.linetype = "dashed",
+  qqline.size = 1,
+  smooth = TRUE,
+  smooth.color = "red",
+  smooth.linetype = 1,
+  smooth.size = 1,
+  fill = NULL,
+  ...
+)
+
+autoplot.gam(
   object,
   what = c("qq", "fitted", "covariate"),
   x = NULL,
