@@ -2,7 +2,6 @@ sure: Surrogate Residuals <img src="man/figures/sure-logo.png" align="right" wid
 ========================================================================================================
 
 [![r-universe status](https://bgreenwell.r-universe.dev/badges/sure)](https://bgreenwell.r-universe.dev/sure)
-[![r-universe version](https://bgreenwell.r-universe.dev/sure/badges/version)](https://bgreenwell.r-universe.dev/sure)
 [![R-CMD-check](https://github.com/bgreenwell/sure/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bgreenwell/sure/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/bgreenwell/sure/branch/master/graph/badge.svg)](https://codecov.io/gh/bgreenwell/sure)
 
