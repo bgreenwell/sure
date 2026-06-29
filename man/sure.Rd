@@ -32,8 +32,10 @@ Regression Models: A Surrogate Approach.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/koalaverse/sure}
-  \item Report bugs at \url{https://github.com/koalaverse/sure/issues}
+  \item \url{https://github.com/bgreenwell/sure}
+  \item \url{https://bgreenwell.github.io/sure/}
+  \item \url{https://bgreenwell.r-universe.dev/sure}
+  \item Report bugs at \url{https://github.com/bgreenwell/sure/issues}
 }
 
 }
