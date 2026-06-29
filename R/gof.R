@@ -47,7 +47,7 @@ gof <- function(object, nsim = 10, test = c("ks", "ad", "cvm"), ...) {
 gof.default <- function(object, nsim = 10, test = c("ks", "ad", "cvm"), ...) {
   test <- match.arg(test)
   if (test %in% c("ad", "cvm") && !requireNamespace("goftest", quietly = TRUE)) {
-    stop("Package \"goftest\" is required for the Anderson-Darling and Cramér-von Mises tests. Please install it.", call. = FALSE)
+    stop("Package \"goftest\" is required for the Anderson-Darling and Cramer-von Mises tests. Please install it.", call. = FALSE)
   }
   res <- resids(object, nsim = nsim)
   pfun <- get_distribution_function(object)

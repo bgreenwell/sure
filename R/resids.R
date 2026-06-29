@@ -5,7 +5,11 @@
 #'
 #' @param object An object of class [ordinal::clm()],
 #' [stats::glm()], [rms::lrm()], [rms::orm()],
-#' [MASS::polr()], or [VGAM::vglm()].
+#' [MASS::polr()], or [VGAM::vglm()]. Or a matrix of fitted probabilities
+#' (e.g., from a multinomial model).
+#'
+#' @param y A vector of the response variable (only used when `object` is a
+#' matrix of probabilities).
 #'
 #' @param nsim Integer specifying the number of bootstrap replicates to use.
 #' Default is `1L` meaning no bootstrap samples.

@@ -18,7 +18,6 @@ knitr::opts_chunk$set(
   fig.align = "center",
   comment = "#>"
 )
-library(ggplot2)
 ```
 
 ## Introduction
@@ -163,14 +162,17 @@ The __sure__ package supports a variety of R packages for fitting cumulative lin
 Table 2: Ordinal regression modelling packages supported by __sure__ and the corresponding parameterization they use for fitting cumulative link models. 
 <br>
 
-The __sure__ package currently exports four functions:
+The __sure__ package currently exports five functions:
 
 * `resids`: for constructing surrogate residuals;
 * `surrogate`: for generating the surrogate response values used in the residuals;
-* `autoplot`: for producing various diagnostic plots using __ggplot2__ graphics [@pkg-ggplot2];
-* `gof`: for simulating $p$-values from various goodness-of-fit tests.
+* `sim_data`: for simulating datasets representing different model misspecifications;
+* `gof`: for simulating $p$-values from various goodness-of-fit tests;
+* `calc_resid`: for calculating multinomial surrogate residuals.
 
-In addition, the package also includes five simulated data sets: `df1`, `df2`, `df3`, `df4`, and `df5`. These data sets are used throughout the paper to demonstrate how the surrogate residual can be useful as a diagnostic tool for cumulative link models. The R code used to generate these data sets is available on the projects GitHub page: [simulated data link](https://github.com/koalaverse/sure/blob/master/data-raw/data.R).
+It also provides `plot()` methods for producing various diagnostic plots using __tinyplot__.
+
+In addition, the package also includes a function `sim_data()` to dynamically simulate five different types of data sets: `"quadratic"`, `"heteroscedastic"`, `"gumbel"`, `"proportionality"`, and `"interaction"`. These data sets (referred to as `df1` through `df5` in the examples below) are used throughout the paper to demonstrate how the surrogate residual can be useful as a diagnostic tool for cumulative link models.
 
 
 ### Detecting a misspecified mean structure
@@ -181,11 +183,15 @@ $$
   Pr\left\{Y \le j\right\} = \Phi\left(\alpha_j + \beta_1 X + \beta_2 X ^ 2\right), \quad j = 1, 2, 3, 4, \tag{3}
 $$
 
-where $\alpha_1 = -16$, $\alpha_2 = -12$, $\alpha_3 = -8$, $\beta_1 = -8$, $\beta_2 = 1$, and $X \sim U\left(1, 7\right)$. These parameters were chosen to ensure that 1) the sample from the latent variable $Z$ is spread out, rather than clustering in a small interval, and 2) each category of $Y$ is well represented in the sample; we follow these guidelines throughout the simulated examples. The simulated data for this example are available in the `df1` data frame from the __sure__ package and are loaded automatically with the package; see `?df1` for details. Below, we fit a (correctly specified) probit model using the `polr` function from the __MASS__ package.
+where $\alpha_1 = -16$, $\alpha_2 = -12$, $\alpha_3 = -8$, $\beta_1 = -8$, $\beta_2 = 1$, and $X \sim U\left(1, 7\right)$. These parameters were chosen to ensure that 1) the sample from the latent variable $Z$ is spread out, rather than clustering in a small interval, and 2) each category of $Y$ is well represented in the sample; we follow these guidelines throughout the simulated examples. The simulated data for this example can be generated using `sim_data(type = "quadratic")`. Below, we fit a (correctly specified) probit model using the `polr` function from the __MASS__ package.
 
 ```{r}
 # for residual function and sample data sets
 library(sure)  
+
+# Simulate quadratic data
+set.seed(977)
+df1 <- sim_data(n = 2000, type = "quadratic")
 
 # Fit a cumulative link model with probit link
 library(MASS)  # for polr function
@@ -234,9 +240,9 @@ par(op)
 ```
 <br>
 
-The __sure__ package also includes `autoplot` methods for the various classes of models listed in Table 1, so you can just give `autoplot` the fitted model directly. The benefit of this approach is that the fitted values and reference distribution (used in Q-Q plots) are automatically extracted. For example, to reproduce the Q-Q plot in Figure 2, we could have just used:
+The __sure__ package also includes `plot` methods for the various classes of models listed in Table 1, so you can just give `plot` the fitted model directly. The benefit of this approach is that the fitted values and reference distribution (used in Q-Q plots) are automatically extracted. For example, to reproduce the Q-Q plot in Figure 2, we could have just used:
 
-```{r fig.width=4, fig.height=3.5, fig.cap="Figure 3: autoplot option."}
+```{r fig.width=4, fig.height=3.5, fig.cap="Figure 3: plot option."}
 # for reproducibility
 set.seed(101) 
 
@@ -280,11 +286,15 @@ $$
 $$
 
 where $\alpha_1 = -36$, $\alpha_2 = -6$, $\alpha_3 = 34$, $\alpha_4 = 64$, $\beta = -4$, $X \sim U\left(2, 7\right)$, and $\sigma_X = X ^ 2$.
-Notice how the variability is an increasing function of $X$. These data are available in the `df2` data frame that is automatically loaded with the __sure__ package; see `?df2` for details.
+Notice how the variability is an increasing function of $X$. These data can be simulated using `sim_data(type = "heteroscedastic")` (referred to as `df2` below).
 
 The following block of code uses the `orm` function from the popular __rms__ package to fit a probit model to the simulated data. __Note:__ we had to set `x = TRUE` in the call to `orm` in order to use the `presid` function later.
 
 ```{r}
+# Simulate heteroscedastic data
+set.seed(108)
+df2 <- sim_data(n = 2000, type = "heteroscedastic")
+
 # Fit a cumulative link model with probit link
 library(rms)  # for orm function
 fit.orm <- orm(y ~ x, data = df2, family = "probit", x = TRUE, y = TRUE)
@@ -318,7 +328,7 @@ fit.vgam <- vgam(y ~ s(x), family = cumulative(link = probitlink, parallel = TRU
                  data = df2)
 ```
 
-To obtain a surrogate residual using the jittering technique, we can set `method = "jitter"` in the call to `resids` or `autoplot`. There is also the option `jitter.scale` which can be set to either `"probability"`, for jittering on the probability scale (the default), or `"response"`, for jittering on the response scale. In the code chunk below, we use the `autoplot` function to obtain residual-by-covariate plots using both types of jittering. The results, which are displayed in Figure 6, clearly indicate that the variance increases with increasing $x$.
+To obtain a surrogate residual using the jittering technique, we can set `method = "jitter"` in the call to `resids` or `plot`. There is also the option `jitter.scale` which can be set to either `"probability"`, for jittering on the probability scale (the default), or `"response"`, for jittering on the response scale. In the code chunk below, we use the `plot` method to obtain residual-by-covariate plots using both types of jittering. The results, which are displayed in Figure 6, clearly indicate that the variance increases with increasing $x$.
 
 ```{r fig.width=7, fig.height=3.5, fig.cap="Figure 6: Residual-vs-covariate plots with nonparametric smooths (red curves) from a vector generalized additive model fit to the simulated heteroscedastic data. Left: Jittering on the probability scale (default). Right: Jittering on the response scale."}
 # for reproducibility
@@ -342,11 +352,15 @@ $$
   Pr\left(Y \le j\right) = G\left(\alpha_j - 8 X + X ^ 2\right), \quad j = 1, 2, 3, 4,
 $$
 
-where $G\left(\cdot\right)$ is the CDF for the Gumbel (max) distribution (see Table 1), $\alpha_1 = -16$, $\alpha_2 = -12$, $\alpha_3 = -8$, $\beta_1 = -8$, $\beta_2 = 1$, and $X \sim U\left(1, 7\right)$. The data are available in the data frame `df3` within the package; see `?df3` for details.
+where $G\left(\cdot\right)$ is the CDF for the Gumbel (max) distribution (see Table 1), $\alpha_1 = -16$, $\alpha_2 = -12$, $\alpha_3 = -8$, $\beta_1 = -8$, $\beta_2 = 1$, and $X \sim U\left(1, 7\right)$. The data can be simulated using `sim_data(type = "gumbel")` (referred to as `df3` below).
 
 Below we fit a model with various link functions. For this model, however, the correct link function to use is the log-log link. From these models, we construct Q-Q plots of the residuals using $R = 100$ bootstrap replicates. From the Q-Q plots in Figure 7, it is clear that the model with the log-log link (which corresponds to Gumbel (max) errors in the latent variable formulation) is the most appropriate, while the other plots indicate deviations from the hypothesized model.
 
 ```{r fig.width=7, fig.height=6, fig.cap="Figure 7: Q-Q plots of the residuals for various cumulative link models fit to simulated data with Gumbel (max) errors. Top left: A model with probit link. Top right: A model with logit link. Bottom left: A model with log-log link (i.e., the correct model). Bottom right: A model with complementary log-log link."}
+# Simulate Gumbel data
+set.seed(977)
+df3 <- sim_data(n = 2000, type = "gumbel")
+
 # Fit models with various link functions to the simulated data
 fit.probit <- polr(y ~ x + I(x ^ 2), data = df3, method = "probit")
 fit.logistic <- polr(y ~ x + I(x ^ 2), data = df3, method = "logistic")
@@ -390,11 +404,15 @@ $$
   Pr\left(Y \le j\right) = \Phi\left(\alpha_j + \beta_1 X\right), \quad j = 1, 2, 3, \quad \textrm{and} \quad Pr\left(Y \le j\right) = \Phi\left(\alpha_j + \beta_2 X\right), \quad j = 4, 5, 6,
 $$
 
-where $\alpha_1 = -1.5$, $\alpha_2 = 0$, $\alpha_3 = 1$, $\alpha_4 = 3$, $\beta_1 = 1$, $\beta_2 = 1.5$, and $X \sim U\left(-3, 3\right)$. The data are available in the data frame `df4` within the package; see `?df4` for details.
+where $\alpha_1 = -1.5$, $\alpha_2 = 0$, $\alpha_3 = 1$, $\alpha_4 = 3$, $\beta_1 = 1$, $\beta_2 = 1.5$, and $X \sim U\left(-3, 3\right)$. The data can be simulated using `sim_data(n = 4000, type = "proportionality")` (referred to as `df4` below).
 
 Checking the proportionality assumption here amounts to checking whether or not $\beta_1 - \beta_2 = 0$. As outlined in @residuals-liu-2017, we can generate surrogates $S_1 \sim N\left(-\beta_1 X, 1\right)$ and $S_2 \sim N\left(-\beta_2 X, 1\right)$, both conditional on $X$. We then define the difference $D = S_2 - S_1$ which, conditional on $X$, follows a $N\left(\left(\beta_1 - \beta_2\right) X, 1\right)$ distribution. If $\beta_1 - \beta_2 = 0$, then $D$ should be independent of $X$. This can be easily checked by plotting $D$ against $X$. Below, we use the `surrogate` function to generate the surrogate response values directly (as opposed to the residuals) and generate the $D$-vs-$X$ plot shown in Figure 9. It is clear that $\beta_1 - \beta_2 Ne 0$; hence, the proportionality assumption does not hold.
 
 ```{r fig.width=6, fig.height=3.5, fig.cap="Figure 9: Scatterplot of $D = S_1 - S_2$ vs. $x$ with a nonparametric smooth (red curve)."}
+# Simulate proportionality data
+set.seed(977)
+df4 <- sim_data(n = 4000, type = "proportionality")
+
 # Fit separate models (VGAM should already be loaded)
 fit1 <- vglm(y ~ x, data = df4[1:2000, ],
              cumulative(link = probitlink, parallel = TRUE))
@@ -423,15 +441,19 @@ $$
   Pr\left(Y \le j\right) = \Phi\left(\alpha_j + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2\right), \quad j = 1, 2, 3, 4,
 $$
 
-where $\alpha_1 = -16$, $\alpha_2 = -12$, $\alpha_3 = -8$, $\beta_1 = -5$, $\beta_2 = 3$, $\beta_3 = 10$, $x_1 \sim U\left(1, 7\right)$, and $x_2$ is a factor with levels `Treatment` and `Control`. The simulated data are available in the `df5` data frame loaded with the __sure__ package; see `?df5` for details. Below, we fit two probit models using the `clm` function from the __ordinal__ package (which should already be loaded). The first model only corresponds to the simulated control group, while the second model corresponds to the treatment group.
+where $\alpha_1 = -16$, $\alpha_2 = -12$, $\alpha_3 = -8$, $\beta_1 = -5$, $\beta_2 = 3$, $\beta_3 = 10$, $x_1 \sim U\left(1, 7\right)$, and $x_2$ is a factor with levels `Treatment` and `Control`. The simulated data can be simulated using `sim_data(type = "interaction")` (referred to as `df5` below). Below, we fit two probit models using the `clm` function from the __ordinal__ package (which should already be loaded). The first model only corresponds to the simulated control group, while the second model corresponds to the treatment group.
 
 ```{r}
+# Simulate interaction data
+set.seed(922)
+df5 <- sim_data(n = 2000, type = "interaction")
+
 library(ordinal)  # for clm function
 fit1 <- clm(y ~ x1, data = df5[df5$x2 == "Control", ], link = "probit")
 fit2 <- clm(y ~ x1, data = df5[df5$x2 == "Treatment", ], link = "probit")
 ```
 
-If the true model contains an interaction term $x_1 x_2$, but the fitted model does not include it, we can detect this misspecification using the surrogate residuals. We simply plot $R_S$ versus $x_1$ for treatment group, and compare it to the plot of $R_S$ versus $x_1$ for the controls---or better yet, we can just use the surrogate response $S$ instead of $R_S$. The trends in these two plots should be different. Below, we use `ggplot` along with the `surrogate` function to construct such a plot for both fitted models. The results are displayed in Figure~\ref{fig:interaction}. The plot indicates a negative association between $x_1$ and the outcome within the control group, and a positive association between $x_1$ and the treatment group (i.e., an interaction between $x_1$ and $x_2$).
+If the true model contains an interaction term $x_1 x_2$, but the fitted model does not include it, we can detect this misspecification using the surrogate residuals. We simply plot $R_S$ versus $x_1$ for treatment group, and compare it to the plot of $R_S$ versus $x_1$ for the controls---or better yet, we can just use the surrogate response $S$ instead of $R_S$. The trends in these two plots should be different. Below, we use `tinyplot` along with the `surrogate` function to construct such a plot for both fitted models. The results are displayed in Figure~\ref{fig:interaction}. The plot indicates a negative association between $x_1$ and the outcome within the control group, and a positive association between $x_1$ and the treatment group (i.e., an interaction between $x_1$ and $x_2$).
 
 ```{r fig.width=7, fig.height=3.5, fig.cap="Figure 10: Scatterplot of the surrogate response $S$ versus $x_1$ with a nonparametric smooth (red line). Left: Control group. Right: Treatment group."}
 # for reproducibility
@@ -472,7 +494,7 @@ data(wine, package = "ordinal")
 wine.clm <- clm(rating ~ temp + contact, data = wine, link = "probit")
 ```
 
-Since both of the covariates in this model are binary factors, scatterplots are not appropriate for displaying the residual-by-covariate relationships. Instead, the `autoplot` function in __sure__ uses boxplots; a future release is likely to include the additional option for producing nonparametric densities for each level of a factor. The code chunk below uses `autoplot` along with `grid.arrange` to produce some standard residual diagnostic plots. The results are displayed in Figure 11. The Q-Q plot and residual-vs-fitted value plot do not indicate any serious model misspecifications. Furthermore, the boxplots reveal that the medians of the surrogate residuals are very close to zero, and the distribution of the residuals within each level appear to be symmetric and have approximately the same variability (with the exception of a few outliers).
+Since both of the covariates in this model are binary factors, scatterplots are not appropriate for displaying the residual-by-covariate relationships. Instead, the `plot` method in __sure__ uses boxplots; a future release is likely to include the additional option for producing nonparametric densities for each level of a factor. The code chunk below uses the `plot` method to produce some standard residual diagnostic plots. The results are displayed in Figure 11. The Q-Q plot and residual-vs-fitted value plot do not indicate any serious model misspecifications. Furthermore, the boxplots reveal that the medians of the surrogate residuals are very close to zero, and the distribution of the residuals within each level appear to be symmetric and have approximately the same variability (with the exception of a few outliers).
 
 
 ```{r fig.width=7, fig.height=7, fig.cap="Figure 11: Residual diagnostic plots for the quality of wine example."}

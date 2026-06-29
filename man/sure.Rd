@@ -38,17 +38,17 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Brandon Greenwell \email{greenwell.brandon@gmail.com} (\href{https://orcid.org/0000-0002-8120-0084}{ORCID})
+\strong{Maintainer}: Brandon Greenwell \email{greenwell.brandon@gmail.com}
 
 Authors:
 \itemize{
-  \item Brad Boehmke \email{bradleyboehmke@gmail.com} (\href{https://orcid.org/0000-0002-3611-8516}{ORCID})
-  \item Andrew McCarthy \email{andrew.mccarthy@theperducogroup.com}
+  \item Andrew McCarthy \email{mccarthyan@gmail.com}
+  \item Boehmke Bradley \email{bradleyboehmke@gmail.com}
 }
 
 Other contributors:
 \itemize{
-  \item Dungang Liu \email{dungang.liu@uc.edu} [contributor]
+  \item Liz Glaser \email{liz.glaser@gmail.com} [contributor]
 }
 
 }

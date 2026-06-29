@@ -13,7 +13,7 @@ get_response_values.clm <- function(object, ...) {
 
 #' @keywords internal
 #' @export
-get_response_values.glm <- function(object) {
+get_response_values.glm <- function(object, ...) {
   y <- object$y
   if (is.null(y)) {
     y <- model.response(model.frame(object))
@@ -56,14 +56,14 @@ get_response_values.glm <- function(object) {
 
 #' @keywords internal
 #' @export
-get_response_values.lrm <- function(object) {
+get_response_values.lrm <- function(object, ...) {
   as.integer(model.response(model.frame(object)))
 }
 
 
 #' @keywords internal
 #' @export
-get_response_values.orm <- function(object) {
+get_response_values.orm <- function(object, ...) {
   as.integer(model.response(model.frame(object)))
 }
 

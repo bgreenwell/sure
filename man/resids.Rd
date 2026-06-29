@@ -24,7 +24,8 @@ resids(object, ...)
 \arguments{
 \item{object}{An object of class \code{\link[ordinal:clm]{ordinal::clm()}},
 \code{\link[stats:glm]{stats::glm()}}, \code{\link[rms:lrm]{rms::lrm()}}, \code{\link[rms:orm]{rms::orm()}},
-\code{\link[MASS:polr]{MASS::polr()}}, or \code{\link[VGAM:vglm]{VGAM::vglm()}}.}
+\code{\link[MASS:polr]{MASS::polr()}}, or \code{\link[VGAM:vglm]{VGAM::vglm()}}. Or a matrix of fitted probabilities
+(e.g., from a multinomial model).}
 
 \item{...}{Additional optional arguments. (Currently ignored.)}
 
@@ -38,6 +39,9 @@ surrogate response values. Current options are \code{"latent"} and
 \item{jitter_scale}{Character string specifyint the scale on which to perform
 the jittering whenever \code{method = "jitter"}. Current options are
 \code{"response"} and \code{"probability"}. Default is \code{"response"}.}
+
+\item{y}{A vector of the response variable (only used when \code{object} is a
+matrix of probabilities).}
 }
 \value{
 A numeric vector of class \code{c("numeric", "surrogate")} containing
