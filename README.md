@@ -1,12 +1,8 @@
 sure: Surrogate Residuals <img src="man/figures/sure-logo.png" align="right" width="130" height="150" />
 ========================================================================================================
 
-<!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sure)](https://cran.r-project.org/package=sure) -->
-[![Build
-Status](https://travis-ci.org/koalaverse/sure.svg?branch=master)](https://travis-ci.org/koalaverse/sure)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/koalaverse/sure?branch=master&svg=true)](https://ci.appveyor.com/project/koalaverse/sure)
-[![codecov](https://codecov.io/gh/koalaverse/sure/branch/master/graph/badge.svg)](https://codecov.io/gh/koalaverse/sure)
+[![R-CMD-check](https://github.com/bgreenwell/sure/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bgreenwell/sure/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/bgreenwell/sure/branch/master/graph/badge.svg)](https://codecov.io/gh/bgreenwell/sure)
 
 Overview
 --------
