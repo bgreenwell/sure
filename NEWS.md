@@ -40,10 +40,7 @@
 
 * incorporated autoplot methods for glm, lrm, orm, polr, vglm
 
-
-# sure 0.2.1
-
-* `autoplot()` can now return multiple plots [(#16)](https://github.com/AFIT-R/sure/issues/16).
+* `autoplot()` can now return multiple plots [(#16)](https://github.com/koalaverse/sure/issues/16).
 
 * Specifying `method = "latent"` now works for binomial GLMs [(27)](https://github.com/koalaverse/sure/issues/27).
 
@@ -54,7 +51,7 @@
 
 * New function `surrogate` for returning the surrogate response values used in calculating the surrogate-based residuals. The surrogate response values can be useful for checking the proportionality assumption of fitted cumulative link models, among other things.
 
-* Jittering (on both the probability scale and the response scale) is now available for fitted cumulative link models based on packages `MASS`, `ordinal`, `rms`, and `VGAM` [(#18)](https://github.com/AFIT-R/sure/issues/18).
+* Jittering (on both the probability scale and the response scale) is now available for fitted cumulative link models based on packages `MASS`, `ordinal`, `rms`, and `VGAM` [(#18)](https://github.com/koalaverse/sure/issues/18).
 
 * Added support for vector generalized additive models from the `VGAM` package (i.e., objects of class `"vgam"`).
 

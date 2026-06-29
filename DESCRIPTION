@@ -16,17 +16,15 @@ Version: 0.3.0
 Authors@R: c(
   person("Brandon", "Greenwell",
          email = "greenwell.brandon@gmail.com",
-         role = c("aut", "cre"),
-         comment = c(ORCID = "0000-0002-8120-0084")),
-  person("Brad", "Boehmke",
-         email = "bradleyboehmke@gmail.com",
-         role = c("aut"),
-         comment = c(ORCID = "0000-0002-3611-8516")),
+         role = c("aut", "cre")),
   person("Andrew", "McCarthy",
-         email = "andrew.mccarthy@theperducogroup.com",
+         email = "mccarthyan@gmail.com",
          role = c("aut")),
-  person("Dungang", "Liu",
-         email = "dungang.liu@uc.edu",
+  person("Boehmke", "Bradley",
+         email = "bradleyboehmke@gmail.com",
+         role = c("aut")),
+  person("Liz", "Glaser",
+         email = "liz.glaser@gmail.com",
          role = c("ctb"))
   )
 Depends:
