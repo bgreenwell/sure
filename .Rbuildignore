@@ -6,3 +6,4 @@
 ^slowtests$
 ^data-raw$
 ^\.github$
+^docs$

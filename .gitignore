@@ -6,3 +6,4 @@ README.Rmd
 inst/doc
 .DS_Store
 *.Rproj
+docs
