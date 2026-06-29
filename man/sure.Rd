@@ -2,30 +2,53 @@
 % Please edit documentation in R/sure.R
 \docType{package}
 \name{sure}
-\alias{sure}
 \alias{sure-package}
+\alias{sure}
 \title{sure: An R package for constructing surrogate-based residuals and diagnostics
 for ordinal and general regression models.}
 \description{
 The \code{sure} package provides surrogate-based residuals for fitted ordinal
 and general (e.g., binary) regression models of class
-\code{\link[ordinal]{clm}}, \code{\link[stats]{glm}}, \code{\link[rms]{lrm}},
-\code{\link[rms]{orm}}, \code{\link[MASS]{polr}}, or
-\code{\link[VGAM]{vglm}}.
+\code{\link[ordinal:clm]{ordinal::clm()}}, \code{\link[stats:glm]{stats::glm()}}, \code{\link[rms:lrm]{rms::lrm()}},
+\code{\link[rms:orm]{rms::orm()}}, \code{\link[MASS:polr]{MASS::polr()}}, or
+\code{\link[VGAM:vglm]{VGAM::vglm()}}.
 }
 \details{
 The development version can be found on GitHub:
 \url{https://github.com/AFIT-R/sure}. As of right now, \code{sure} exports the
 following functions:
 \itemize{
-  \item{\code{resids}} - construct (surrogate-based) residuals;
-  \item{\code{autoplot}} - plot diagnostics using
-  \code{\link[ggplot2]{ggplot2}}-based graphics;
-  \item{\code{gof}} - simulate p-values from a goodness-of-fit test.
+\item{\code{resids}} - construct (surrogate-based) residuals;
+\item{\code{plot}} - plot diagnostics using
+\code{\link[tinyplot:tinyplot]{tinyplot::tinyplot()}}-based graphics;
+\item{\code{gof}} - simulate p-values from a goodness-of-fit test.
 }
 }
 \references{
 Liu, Dungang and Zhang, Heping. Residuals and Diagnostics for Ordinal
 Regression Models: A Surrogate Approach.
 \emph{Journal of the American Statistical Association} (accepted).
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/koalaverse/sure}
+  \item Report bugs at \url{https://github.com/koalaverse/sure/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Brandon Greenwell \email{greenwell.brandon@gmail.com} (\href{https://orcid.org/0000-0002-8120-0084}{ORCID})
+
+Authors:
+\itemize{
+  \item Brad Boehmke \email{bradleyboehmke@gmail.com} (\href{https://orcid.org/0000-0002-3611-8516}{ORCID})
+  \item Andrew McCarthy \email{andrew.mccarthy@theperducogroup.com}
+}
+
+Other contributors:
+\itemize{
+  \item Dungang Liu \email{dungang.liu@uc.edu} [contributor]
+}
+
 }

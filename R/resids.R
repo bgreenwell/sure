@@ -3,52 +3,52 @@
 #' Simulate surrogate response values for cumulative link regression models
 #' using the latent method described in Liu and Zhang (2017).
 #'
-#' @param object An object of class \code{\link[ordinal]{clm}},
-#' \code{\link[stats]{glm}}, \code{\link[rms]{lrm}}, \code{\link[rms]{orm}},
-#' \code{\link[MASS]{polr}}, or \code{\link[VGAM]{vglm}}.
+#' @param object An object of class [ordinal::clm()],
+#' [stats::glm()], [rms::lrm()], [rms::orm()],
+#' [MASS::polr()], or [VGAM::vglm()].
 #'
 #' @param nsim Integer specifying the number of bootstrap replicates to use.
-#' Default is \code{1L} meaning no bootstrap samples.
+#' Default is `1L` meaning no bootstrap samples.
 #'
 #' @param method Character string specifying which method to use to generate the
-#' surrogate response values. Current options are \code{"latent"} and
-#' \code{"jitter"}. Default is \code{"latent"}.
+#' surrogate response values. Current options are `"latent"` and
+#' `"jitter"`. Default is `"latent"`.
 #'
-#' @param jitter.scale Character string specifyint the scale on which to perform
-#' the jittering whenever \code{method = "jitter"}. Current options are
-#' \code{"response"} and \code{"probability"}. Default is \code{"response"}.
+#' @param jitter_scale Character string specifyint the scale on which to perform
+#' the jittering whenever `method = "jitter"`. Current options are
+#' `"response"` and `"probability"`. Default is `"response"`.
 #'
 #' @param ... Additional optional arguments. (Currently ignored.)
 #'
-#' @return A numeric vector of class \code{c("numeric", "surrogate")} containing
-#' the simulated surrogate response values. Additionally, if \code{nsim} > 1,
+#' @return A numeric vector of class `c("numeric", "surrogate")` containing
+#' the simulated surrogate response values. Additionally, if `nsim` > 1,
 #' then the result will contain the attributes:
 #' \describe{
-#'   \item{\code{boot_reps}}{A matrix  with \code{nsim} columns, one for each
+#'   \item{`boot_reps`}{A matrix  with `nsim` columns, one for each
 #'   bootstrap replicate of the surrogate values. Note, these are random and do
 #'   not correspond to the original ordering of the data;}
-#'   \item{\code{boot_id}}{A matrix  with \code{nsim} columns. Each column
+#'   \item{`boot_id`}{A matrix  with `nsim` columns. Each column
 #'   contains the observation number each surrogate value corresponds to in
-#'   \code{boot_reps}. (This is used for plotting purposes.)}
+#'   `boot_reps`. (This is used for plotting purposes.)}
 #' }
 #'
 #' @note
 #' Surrogate response values require sampling from a continuous distribution;
 #' consequently, the result will be different with every call to
-#' \code{surrogate}. The internal functions used for sampling from truncated
+#' `surrogate`. The internal functions used for sampling from truncated
 #' distributions are based on modified versions of
-#' \code{\link[truncdist]{rtrunc}} and \code{\link[truncdist]{qtrunc}}.
+#' [truncdist::rtrunc()] and [truncdist::qtrunc()].
 #'
-#' For \code{"glm"} objects, only the \code{binomial()} family is supported.
+#' For `"glm"` objects, only the `binomial()` family is supported.
 #'
 #' @references
 #' Liu, Dungang and Zhang, Heping. Residuals and Diagnostics for Ordinal
 #' Regression Models: A Surrogate Approach.
-#' \emph{Journal of the American Statistical Association} (accepted). URL
+#' *Journal of the American Statistical Association* (accepted). URL
 #' http://www.tandfonline.com/doi/abs/10.1080/01621459.2017.1292915?journalCode=uasa20
 #'
 #' Nadarajah, Saralees and Kotz, Samuel. R Programs for Truncated Distributions.
-#' \emph{Journal of Statistical Software, Code Snippet}, 16(2), 1-8, 2006. URL
+#' *Journal of Statistical Software, Code Snippet*, 16(2), 1-8, 2006. URL
 #' https://www.jstatsoft.org/v016/c02.
 #'
 #' @export
@@ -82,12 +82,21 @@
 #'                ylab = "Surrogate residual",
 #'                lpars = list(lwd = 3, col = "red2"))
 #' abline(h = 0, lty = 2, col = "blue2")
-resids <- function(object, nsim = 1L, method = c("latent", "jitter"),
-                   jitter.scale = c("response", "probability"), ...) {
+#' @export
+resids <- function(object, ...) {
+  UseMethod("resids")
+}
+
+
+#' @rdname resids
+#' @method resids default
+#' @export
+resids.default <- function(object, nsim = 1L, method = c("latent", "jitter"),
+                           jitter_scale = c("response", "probability"), ...) {
 
   # Match arguments
   method <- match.arg(method)
-  jitter.scale = match.arg(jitter.scale)
+  jitter_scale = match.arg(jitter_scale)
 
   # Issue warning for jittering method
   if (method == "jitter") {
@@ -96,23 +105,65 @@ resids <- function(object, nsim = 1L, method = c("latent", "jitter"),
   }
 
   # Generate surrogate response values
-  r <- generate_residuals(object, method = method, jitter.scale = jitter.scale)
+  r <- generate_residuals(object, method = method, jitter_scale = jitter_scale)
 
   # Multiple samples
   if (nsim > 1L) {  # bootstrap
-    boot_reps <- boot_id <- matrix(nrow = nobs(object), ncol = nsim)
-    for(i in seq_len(nsim)) {
-      boot_id[, i] <- sample(nobs(object), replace = TRUE)
-      boot_reps[, i] <-
-        generate_residuals(object, method = method, jitter.scale = jitter.scale,
-                           boot_id = boot_id[, i, drop = TRUE])
-    }
-    attr(r, "boot_reps") <- boot_reps
-    attr(r, "boot_id") <- boot_id
+    boot_results <- run_bootstrap_reps(
+      object, nsim = nsim, fun = generate_residuals,
+      method = method, jitter_scale = jitter_scale
+    )
+    attr(r, "boot_reps") <- boot_results$boot_reps
+    attr(r, "boot_id") <- boot_results$boot_id
+  }
+
+  # Pad main residuals if needed
+  if (!is.null(stats::na.action(object))) {
+    r <- stats::naresid(stats::na.action(object), r)
   }
 
   # Return residuals
   class(r) <- c("numeric", "resid")
+  if (method == "jitter") {
+    attr(r, "jitter_scale") <- jitter_scale
+  }
   r
 
+}
+
+
+#' @rdname resids
+#' @method resids multinom
+#' @export
+resids.multinom <- function(object, ...) {
+  # Extract y and proba from multinom object
+  proba <- stats::fitted(object)
+  if (is.null(dim(proba))) {
+    # Binary multinom returns a single vector of probabilities
+    proba <- cbind(1 - proba, proba)
+  }
+  y <- model.response(model.frame(object))
+  y <- as.integer(as.factor(y))
+
+  # Calculate residuals
+  R <- calc_resid(y, proba)
+  class(R) <- c("matrix", "resid")
+  R
+}
+
+
+#' @rdname resids
+#' @method resids matrix
+#' @export
+resids.matrix <- function(object, y, ...) {
+  proba <- object
+  y <- as.integer(as.factor(y))
+  if (length(y) != nrow(proba)) {
+    stop("Length of y must match number of rows of the probability matrix.", call. = FALSE)
+  }
+
+  # Calculate residuals
+  R <- calc_resid(y, proba)
+  class(R) <- c("matrix", "resid")
+  R
 }

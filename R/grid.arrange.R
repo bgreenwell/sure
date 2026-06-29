@@ -1,6 +1,6 @@
 #' Arrange multiple grobs on a page
 #'
-#' See \code{\link[gridExtra]{grid.arrange}} for more details.
+#' See [gridExtra::grid.arrange()] for more details.
 #'
 #' @name grid.arrange
 #'

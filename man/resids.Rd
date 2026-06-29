@@ -2,15 +2,31 @@
 % Please edit documentation in R/resids.R
 \name{resids}
 \alias{resids}
+\alias{resids.default}
+\alias{resids.multinom}
+\alias{resids.matrix}
 \title{Surrogate residuals}
 \usage{
-resids(object, nsim = 1L, method = c("latent", "jitter"),
-  jitter.scale = c("response", "probability"), ...)
+resids(object, ...)
+
+\method{resids}{default}(
+  object,
+  nsim = 1L,
+  method = c("latent", "jitter"),
+  jitter_scale = c("response", "probability"),
+  ...
+)
+
+\method{resids}{multinom}(object, ...)
+
+\method{resids}{matrix}(object, y, ...)
 }
 \arguments{
-\item{object}{An object of class \code{\link[ordinal]{clm}},
-\code{\link[stats]{glm}}, \code{\link[rms]{lrm}}, \code{\link[rms]{orm}},
-\code{\link[MASS]{polr}}, or \code{\link[VGAM]{vglm}}.}
+\item{object}{An object of class \code{\link[ordinal:clm]{ordinal::clm()}},
+\code{\link[stats:glm]{stats::glm()}}, \code{\link[rms:lrm]{rms::lrm()}}, \code{\link[rms:orm]{rms::orm()}},
+\code{\link[MASS:polr]{MASS::polr()}}, or \code{\link[VGAM:vglm]{VGAM::vglm()}}.}
+
+\item{...}{Additional optional arguments. (Currently ignored.)}
 
 \item{nsim}{Integer specifying the number of bootstrap replicates to use.
 Default is \code{1L} meaning no bootstrap samples.}
@@ -19,23 +35,21 @@ Default is \code{1L} meaning no bootstrap samples.}
 surrogate response values. Current options are \code{"latent"} and
 \code{"jitter"}. Default is \code{"latent"}.}
 
-\item{jitter.scale}{Character string specifyint the scale on which to perform
+\item{jitter_scale}{Character string specifyint the scale on which to perform
 the jittering whenever \code{method = "jitter"}. Current options are
 \code{"response"} and \code{"probability"}. Default is \code{"response"}.}
-
-\item{...}{Additional optional arguments. (Currently ignored.)}
 }
 \value{
 A numeric vector of class \code{c("numeric", "surrogate")} containing
 the simulated surrogate response values. Additionally, if \code{nsim} > 1,
 then the result will contain the attributes:
 \describe{
-  \item{\code{boot_reps}}{A matrix  with \code{nsim} columns, one for each
-  bootstrap replicate of the surrogate values. Note, these are random and do
-  not correspond to the original ordering of the data;}
-  \item{\code{boot_id}}{A matrix  with \code{nsim} columns. Each column
-  contains the observation number each surrogate value corresponds to in
-  \code{boot_reps}. (This is used for plotting purposes.)}
+\item{\code{boot_reps}}{A matrix  with \code{nsim} columns, one for each
+bootstrap replicate of the surrogate values. Note, these are random and do
+not correspond to the original ordering of the data;}
+\item{\code{boot_id}}{A matrix  with \code{nsim} columns. Each column
+contains the observation number each surrogate value corresponds to in
+\code{boot_reps}. (This is used for plotting purposes.)}
 }
 }
 \description{
@@ -47,7 +61,7 @@ Surrogate response values require sampling from a continuous distribution;
 consequently, the result will be different with every call to
 \code{surrogate}. The internal functions used for sampling from truncated
 distributions are based on modified versions of
-\code{\link[truncdist]{rtrunc}} and \code{\link[truncdist]{qtrunc}}.
+\code{\link[truncdist:rtrunc]{truncdist::rtrunc()}} and \code{\link[truncdist:qtrunc]{truncdist::qtrunc()}}.
 
 For \code{"glm"} objects, only the \code{binomial()} family is supported.
 }

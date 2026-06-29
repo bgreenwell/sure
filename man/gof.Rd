@@ -13,9 +13,9 @@ gof(object, nsim = 10, test = c("ks", "ad", "cvm"), ...)
 \method{plot}{gof}(x, ...)
 }
 \arguments{
-\item{object}{An object of class \code{\link[ordinal]{clm}},
-\code{\link[stats]{glm}}, \code{\link[rms]{lrm}}, \code{\link[rms]{orm}},
-\code{\link[MASS]{polr}}, or \code{\link[VGAM]{vglm}}.}
+\item{object}{An object of class \code{\link[ordinal:clm]{ordinal::clm()}},
+\code{\link[stats:glm]{stats::glm()}}, \code{\link[rms:lrm]{rms::lrm()}}, \code{\link[rms:orm]{rms::orm()}},
+\code{\link[MASS:polr]{MASS::polr()}}, or \code{\link[VGAM:vglm]{VGAM::vglm()}}.}
 
 \item{nsim}{Integer specifying the number of bootstrap replicates to use.}
 
@@ -29,7 +29,7 @@ Cramer-Von Mises test. Default is \code{"ks"}.}
 \item{x}{An object of class \code{"gof"}.}
 }
 \value{
-A numeric vector of class \code{"gof", "numeric"} containing the
+A numeric vector of class \verb{"gof", "numeric"} containing the
 simulated p-values.
 }
 \description{
@@ -37,7 +37,7 @@ Simulate p-values from a goodness-of-fit test.
 }
 \details{
 Under the null hypothesis, the distribution of the p-values should appear
-uniformly distributed on the interval [0, 1]. This can be visually
+uniformly distributed on the interval \verb{[0, 1]}. This can be visually
 investigated using the \code{plot} method. A 45 degree line is indicative of
 a "good" fit.
 }
