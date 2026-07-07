@@ -6,6 +6,7 @@
 * Added latent surrogate residual method for general, non-binary vanilla GLMs.
 * Added case weights support (`prior.weights`) for Gaussian and Gamma GLMs.
 * Added a new public function `sim_data()` to dynamically simulate datasets representing different model misspecifications.
+* Added a Quick start section to the README, `codecov.yml`, and a curated `_pkgdown.yml` reference index.
 
 ## Changed
 * Migrated residual diagnostic plots from `ggplot2`/`gridExtra` to `tinyplot` via standard S3 `plot()` methods.
@@ -13,6 +14,11 @@
 * Refactored internal utilities from a single `utils.R` file into separate generic-specific files.
 * Abstracted duplicate bootstrap replication loops into a single shared helper `run_bootstrap_reps()`.
 * Upgraded minimum R dependency version from `3.1` to `4.0.0` in DESCRIPTION.
+* Adopted the devel/main branch model; `devel` is now the default development branch.
+* Consolidated `generate_surrogate()`/`generate_residuals()` (previously ~90% duplicated) into a single code path.
+* Deduplicated `get_bounds.orm`/`ncat.orm`/`get_mean_response.orm` (now aliased to their `lrm` equivalents) and collapsed `get_distribution_function()`/`get_quantile_function()` from 12 S3 methods into two functions over shared lookup tables.
+* Converted remaining legacy Rd markup to markdown roxygen and modernized the package-doc file to the `"_PACKAGE"` sentinel.
+* Rewrote the stale `DESCRIPTION` paragraph describing the removed ggplot2-based `autoplot()`.
 
 ## Deprecated
 * Deprecated the `ggplot2`-based `autoplot()` methods in favor of standard `plot()` S3 methods.
@@ -22,6 +28,7 @@
 * Removed `testthat` testing framework and rebuilt the entire test suite using `tinytest`.
 * Removed the redundant `slowtests/` directory as its test cases are fully covered by the package vignette and the unit test suite.
 * Removed the static datasets `df1` through `df5` and their documentation, replacing them completely with `sim_data()`.
+* Removed the unused `mgcv` Suggests entry, the stale `LazyData` field, the `pr-commands.yaml` workflow, and a stray tracked `vignettes/sure.R` build artifact.
 
 ## Fixed
 * Fixed a bug in `gof()` validation checking due to operator precedence.
@@ -29,6 +36,10 @@
 * Fixed `nsim > 1` bootstrap crashes on model classes that do not support `nobs()`.
 * Fixed link function name matching for `vglm` models containing `"link"` suffixes.
 * Fixed dimension mismatch crashes in `clm` and `polr` models with collinear (aliased) predictors.
+* Fixed `tinytest::at_home()` gating: `test_package()`'s own default silently skipped roughly 63% of the test suite (104 of 164 expectations) in every environment, including CI, regardless of any environment variable.
+* Fixed a stale Rd cross-reference to the undeclared `truncdist` package.
+* Fixed missing `stats` `@importFrom` entries (`pgamma`, `pnbinom`, `ppois`) flagged by `R CMD check`.
+* Fixed a leftover vignette placeholder title.
 
 # sure 0.2.2
 
