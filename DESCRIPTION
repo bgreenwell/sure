@@ -7,11 +7,11 @@ Description: An implementation of the surrogate approach to residuals and
   (2017, <https://journal.r-project.org/archive/2018/RJ-2018-004/index.html>). 
   These residuals can be used to construct standard residual plots for model 
   diagnostics (e.g., residual-vs-fitted value plots, residual-vs-covariate plots, 
-  Q-Q plots, etc.). The package also provides an 'autoplot' function for producing 
-  standard diagnostic plots using 'ggplot2' graphics. The package currently supports 
-  cumulative link models from packages 'MASS', 'ordinal', 'rms', and 'VGAM'. 
-  Support for binary regression models using the standard 'glm' function is also 
-  available.
+  Q-Q plots, etc.). The package also provides 'plot' methods for producing
+  standard diagnostic plots using lightweight base R graphics (via 'tinyplot').
+  The package currently supports cumulative link models from packages 'MASS',
+  'ordinal', 'rms', and 'VGAM'. Support for binary regression models using the
+  standard 'glm' function is also available.
 Version: 0.3.0.9000
 Authors@R: c(
   person("Brandon", "Greenwell",
@@ -35,7 +35,6 @@ Suggests:
   goftest,
   knitr,
   MASS,
-  mgcv,
   ordinal,
   PResiduals,
   rmarkdown,
