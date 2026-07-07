@@ -1,5 +1,8 @@
 # sure (development version)
 
+## Added
+* Added `inst/tinytest/test_issues.R` with regression tests confirming fixes for issues [#28](https://github.com/bgreenwell/sure/issues/28), [#35](https://github.com/bgreenwell/sure/issues/35), [#38](https://github.com/bgreenwell/sure/issues/38), and [#39](https://github.com/bgreenwell/sure/issues/39), and pinning the intended `nsim`/`boot_reps` behavior from [#44](https://github.com/bgreenwell/sure/issues/44).
+
 # sure 0.3.0
 
 ## Added
