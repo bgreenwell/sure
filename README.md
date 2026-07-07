@@ -31,6 +31,24 @@ if (!requireNamespace("pak")) {
 pak::pak("bgreenwell/sure")
 ```
 
+Quick start
+-----------
+
+``` r
+library(sure)
+
+# Simulate an ordinal response with a quadratic true relationship
+set.seed(101)
+df <- sim_data(n = 500, type = "quadratic")
+
+# Fit a (misspecified) proportional odds model
+fit <- MASS::polr(y ~ x, data = df)
+
+# Compute surrogate-based residuals and plot the diagnostics
+res <- resids(fit)
+plot(res, what = "covariate", covariate = df$x, xlab = "x")
+```
+
 References
 ----------
 
