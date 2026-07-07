@@ -56,7 +56,7 @@ if (tinytest::at_home() && requireNamespace("rms", quietly = TRUE)) {
 }
 
 # --- orm objects ---
-if (requireNamespace("rms", quietly = TRUE)) {
+if (tinytest::at_home() && requireNamespace("rms", quietly = TRUE)) {
   library(rms)
   fit.logit <- rms::orm(y ~ x, data = df1, family = "logistic")
   fit.probit <- rms::orm(y ~ x, data = df1, family = "probit")
