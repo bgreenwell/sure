@@ -1,4 +1,4 @@
-# sure 0.3.0
+# sure (development version)
 
 ## Added
 * Added direct exact Gumbel and multivariate normal samplers for multinomial residuals.
