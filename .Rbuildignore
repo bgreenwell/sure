@@ -1,9 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^README\.Rmd$
-^README\.html$
-^manuscript$
-^slowtests$
-^data-raw$
 ^\.github$
 ^docs$
+^AGENTS\.md$
+^CLAUDE\.md$
