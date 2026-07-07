@@ -4,3 +4,5 @@
 ^docs$
 ^AGENTS\.md$
 ^CLAUDE\.md$
+^codecov\.yml$
+^_pkgdown\.yml$

@@ -1,0 +1,45 @@
+url: https://bgreenwell.github.io/sure/
+
+template:
+  bootstrap: 5
+
+home:
+  title: sure — Surrogate Residuals for Ordinal and General Regression Models
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+
+articles:
+- title: Vignettes
+  navbar: ~
+  contents:
+  - sure
+
+reference:
+- title: Compute residuals
+  desc: >
+    Compute surrogate response values and surrogate-based residuals for
+    fitted ordinal and general regression models.
+  contents:
+  - surrogate
+  - resids
+  - calc_resid
+- title: Diagnostics
+  desc: >
+    Simulate p-values from a goodness-of-fit test.
+  contents:
+  - gof
+- title: Plotting
+  desc: >
+    Display residual diagnostics using lightweight base R graphics (via
+    tinyplot).
+  contents:
+  - plot.resid
+- title: Simulate data
+  desc: >
+    Simulate ordinal datasets representing different model
+    misspecifications.
+  contents:
+  - sim_data
