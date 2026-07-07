@@ -21,7 +21,8 @@
 #' *Journal of the American Statistical Association* (accepted).
 #' @importFrom stats .checkMFClasses lowess median model.frame model.matrix
 #'
-#' @importFrom stats model.response nobs pbinom pcauchy plogis pnorm ppoints
+#' @importFrom stats model.response nobs pbinom pcauchy pgamma plogis pnbinom
+#' @importFrom stats pnorm ppoints ppois
 #'
 #' @importFrom stats predict qcauchy qlogis qnorm qqline qqplot qqnorm quantile
 #'
