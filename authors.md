@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/bgreenwell/sure/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/bgreenwell/sure/blob/v0.3.0/inst/CITATION)
 
 Brandon M. Greenwell, Andrew J. McCarthy, Bradley C. Boehmke, Dungang
 Lui (2018). Residuals and diagnostics for binary and ordinal regression
