@@ -27,21 +27,19 @@
 #' @return A numeric vector of class `c("numeric", "surrogate")` containing
 #' the simulated surrogate response values. Additionally, if `nsim` > 1,
 #' then the result will contain the attributes:
-#' \describe{
-#'   \item{`boot_reps`}{A matrix  with `nsim` columns, one for each
-#'   bootstrap replicate of the surrogate values. Note, these are random and do
-#'   not correspond to the original ordering of the data;}
-#'   \item{`boot_id`}{A matrix  with `nsim` columns. Each column
-#'   contains the observation number each surrogate value corresponds to in
-#'   `boot_reps`. (This is used for plotting purposes.)}
-#' }
+#' * `boot_reps`: A matrix with `nsim` columns, one for each bootstrap
+#'   replicate of the surrogate values. Note, these are random and do not
+#'   correspond to the original ordering of the data.
+#' * `boot_id`: A matrix with `nsim` columns. Each column contains the
+#'   observation number each surrogate value corresponds to in `boot_reps`.
+#'   (This is used for plotting purposes.)
 #'
 #' @note
 #' Surrogate response values require sampling from a continuous distribution;
 #' consequently, the result will be different with every call to
 #' `surrogate`. The internal functions used for sampling from truncated
 #' distributions are based on modified versions of
-#' [truncdist::rtrunc()] and [truncdist::qtrunc()].
+#' `truncdist::rtrunc()` and `truncdist::qtrunc()`.
 #'
 #' For `"glm"` objects, only the `binomial()` family is supported.
 #'

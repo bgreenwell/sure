@@ -34,13 +34,13 @@ the jittering whenever \code{method = "jitter"}. Current options are
 A numeric vector of class \code{c("numeric", "surrogate")} containing
 the simulated surrogate response values. Additionally, if \code{nsim} > 1,
 then the result will contain the attributes:
-\describe{
-\item{\code{boot_reps}}{A matrix  with \code{nsim} columns, one for each
-bootstrap replicate of the surrogate values. Note, these are random and do
-not correspond to the original ordering of the data;}
-\item{\code{boot_id}}{A matrix  with \code{nsim} columns. Each column
-contains the observation number each surrogate value corresponds to in
-\code{boot_reps}. (This is used for plotting purposes.)}
+\itemize{
+\item \code{boot_reps}: A matrix with \code{nsim} columns, one for each bootstrap
+replicate of the surrogate values. Note, these are random and do not
+correspond to the original ordering of the data.
+\item \code{boot_id}: A matrix with \code{nsim} columns. Each column contains the
+observation number each surrogate value corresponds to in \code{boot_reps}.
+(This is used for plotting purposes.)
 }
 }
 \description{
@@ -52,7 +52,7 @@ Surrogate response values require sampling from a continuous distribution;
 consequently, the result will be different with every call to
 \code{surrogate}. The internal functions used for sampling from truncated
 distributions are based on modified versions of
-\code{\link[truncdist:rtrunc]{truncdist::rtrunc()}} and \code{\link[truncdist:qtrunc]{truncdist::qtrunc()}}.
+\code{truncdist::rtrunc()} and \code{truncdist::qtrunc()}.
 
 For \code{"glm"} objects, only the \code{binomial()} family is supported.
 }
