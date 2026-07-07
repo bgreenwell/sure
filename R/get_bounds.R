@@ -32,10 +32,7 @@ get_bounds.lrm <- function(object, ...) {
 
 #' @keywords internal
 #' @export
-get_bounds.orm <- function(object, ...) {
-  coefs <- -unname(stats::coef(object))
-  c(-Inf, coefs[seq_len(ncat(object) - 1)] - coefs[1L], Inf)
-}
+get_bounds.orm <- get_bounds.lrm
 
 
 #' @keywords internal
