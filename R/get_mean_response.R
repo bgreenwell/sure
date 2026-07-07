@@ -40,10 +40,7 @@ get_mean_response.lrm <- function(object) {
 
 #' @keywords internal
 #' @export
-get_mean_response.orm <- function(object) {
-  # No negative sign since orm uses the reverse parameterization: Pr(Y >= j)
-  predict(object, type = "lp", kint = 1L)
-}
+get_mean_response.orm <- get_mean_response.lrm
 
 
 #' @keywords internal

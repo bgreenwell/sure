@@ -8,14 +8,12 @@
 #' [VGAM::vglm()].
 #'
 #' The development version can be found on GitHub:
-#' <https://github.com/AFIT-R/sure>. As of right now, `sure` exports the
+#' <https://github.com/bgreenwell/sure>. As of right now, `sure` exports the
 #' following functions:
-#' \itemize{
-#'   \item{`resids`} - construct (surrogate-based) residuals;
-#'   \item{`plot`} - plot diagnostics using
-#'   [tinyplot::tinyplot()]-based graphics;
-#'   \item{`gof`} - simulate p-values from a goodness-of-fit test.
-#' }
+#'
+#' - `resids()` - construct (surrogate-based) residuals;
+#' - `plot()` - plot diagnostics using [tinyplot::tinyplot()]-based graphics;
+#' - `gof()` - simulate p-values from a goodness-of-fit test.
 #'
 #' @references
 #' Liu, Dungang and Zhang, Heping. Residuals and Diagnostics for Ordinal
@@ -23,13 +21,16 @@
 #' *Journal of the American Statistical Association* (accepted).
 #' @importFrom stats .checkMFClasses lowess median model.frame model.matrix
 #'
-#' @importFrom stats model.response nobs pbinom pcauchy plogis pnorm ppoints
+#' @importFrom stats model.response nobs pbinom pcauchy pgamma plogis pnbinom
+#' @importFrom stats pnorm ppoints ppois
 #'
 #' @importFrom stats predict qcauchy qlogis qnorm qqline qqplot qqnorm quantile
 #'
 #' @importFrom stats qunif runif
 #'
-#' @docType package
-#'
-#' @name sure
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+## usethis namespace: end
 NULL

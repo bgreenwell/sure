@@ -192,20 +192,13 @@ plot.resid <- function(
       y_label <- if (is.null(ylab)) "Surrogate residual" else ylab
       main_label <- if (is.null(main)) "Residual vs Covariate" else main
 
-      if (!"col" %in% names(dots)) {
-        tinyplot::tinyplot(
-          x = covariate, y = res, type = "boxplot",
-          by = covariate, legend = FALSE,
-          xlab = x_label, ylab = y_label, main = main_label,
-          ...
-        )
-      } else {
-        tinyplot::tinyplot(
-          x = covariate, y = res, type = "boxplot",
-          xlab = x_label, ylab = y_label, main = main_label,
-          ...
-        )
-      }
+      args <- c(
+        list(x = covariate, y = res, type = "boxplot",
+             xlab = x_label, ylab = y_label, main = main_label),
+        if (!"col" %in% names(dots)) list(by = covariate, legend = FALSE),
+        dots
+      )
+      do.call(tinyplot::tinyplot, args)
     } else {
       plot_points(
         x = covariate, y = res,

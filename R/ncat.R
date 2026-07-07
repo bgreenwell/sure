@@ -27,9 +27,7 @@ ncat.lrm <- function(object) {
 
 #' @keywords internal
 #' @export
-ncat.orm <- function(object) {
-  object$non.slopes + 1
-}
+ncat.orm <- ncat.lrm
 
 
 #' @keywords internal
