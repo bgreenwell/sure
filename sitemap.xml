@@ -1,19 +1,17 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/AGENTS.html</loc></url>
-<url><loc>/CLAUDE.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/articles/sure.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/news/index.html</loc></url>
-<url><loc>/reference/calc_resid.html</loc></url>
-<url><loc>/reference/gof.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/plot.resid.html</loc></url>
-<url><loc>/reference/resids.html</loc></url>
-<url><loc>/reference/sim_data.html</loc></url>
-<url><loc>/reference/sure.html</loc></url>
-<url><loc>/reference/surrogate.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/404.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/articles/index.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/articles/sure.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/authors.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/index.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/news/index.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/reference/calc_resid.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/reference/gof.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/reference/index.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/reference/plot.resid.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/reference/resids.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/reference/sim_data.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/reference/sure-package.html</loc></url>
+<url><loc>https://bgreenwell.github.io/sure/reference/surrogate.html</loc></url>
 </urlset>
 
