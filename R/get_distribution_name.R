@@ -24,7 +24,9 @@ get_distribution_name.glm <- function(object) {
     switch(link,
            "logit" = "logis",
            "probit" = "norm",
-           "cloglog" = "Gumbel",
+           # Y = 1 corresponds to S > 0, so P(Y = 1) = 1 - F(-eta), which
+           # matches the cloglog inverse link only for Gumbel-max (#45)
+           "cloglog" = "gumbel",
            "cauchit" = "cauchy")
   } else {
     "norm"

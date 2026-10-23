@@ -65,3 +65,19 @@ expect_equal(length(res44_10), nrow(df44))
 expect_equal(dim(attr(res44_10, "boot_reps")), c(nrow(df44), 10))
 boot_reps44 <- attr(res44_10, "boot_reps")
 expect_false(all(boot_reps44[, 1] == boot_reps44[, 2]))
+
+# --- Issue #45: binary cloglog GLMs used the Gumbel-min latent distribution;
+# Y = 1 corresponds to S > 0, so the latent error must be Gumbel-max ---
+set.seed(45)
+x45 <- rnorm(5000)
+y45 <- rbinom(5000, size = 1, prob = binomial("cloglog")$linkinv(-0.3 + 0.8 * x45))
+fit45 <- glm(y45 ~ x45, family = binomial(link = "cloglog"))
+expect_equal(sure:::get_distribution_name(fit45), "gumbel")
+eta45 <- seq(-2, 2, length.out = 9)
+expect_equal(1 - sure:::get_distribution_function(fit45)(-eta45),
+             binomial("cloglog")$linkinv(eta45))
+# Under a correctly specified model, S - eta follows the latent distribution,
+# whose mean is +0.5772 (Euler's constant) for Gumbel-max and -0.5772 for
+# Gumbel-min
+expect_equal(mean(surrogate(fit45) - fit45$linear.predictors), 0.5772,
+             tolerance = 0.05)
