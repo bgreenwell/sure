@@ -19,7 +19,8 @@ This file provides context, architectural design rules, and common commands for 
 
 *   **`devel`** (default): all development and PRs. Version carries a `.9000` suffix; NEWS.md starts with `# sure (development version)`.
 *   **`main`**: stable releases only, tagged `vX.Y.Z`. r-universe (pinned to `main` in `bgreenwell/bgreenwell.r-universe.dev`) and the pkgdown site both build from `main` — never push experimental work there.
-*   Release: merge devel → main (`--no-ff`), drop the `.9000` suffix and dev NEWS heading, tag, push, `gh release create`; then **merge main back into devel** (else the release merge commit leaves devel "behind" main) and bump devel to the next `.9000`.
+*   **sure is on CRAN** (0.2.0 from 2017, updated with 0.3.1), so releases follow the "CRAN releases" flow in `../CLAUDE.md`: drop the `.9000` suffix and dev NEWS heading on devel, pass the quality gate, run `revdepcheck` (CRAN revdep: **weightedCL**, which does `import(sure)`), write `cran-comments.md`, and submit from devel. Only **after CRAN accepts**, merge devel → main (`--no-ff`), tag, push, `gh release create`; then **merge main back into devel** (else the release merge commit leaves devel "behind" main) and bump devel to the next `.9000`.
+*   Don't register `plot()` methods for classes that already have one in base R (e.g., `glm`): once sure is loaded, including through a revdep's `import(sure)`, it would replace the standard diagnostics for everyone. `plot.glm` was dropped in 0.3.1 for this reason; glm users call `plot(resids(fit), fit = fit)`.
 *   Shared fixes that main needs immediately: commit to **main first, then merge main → devel**. Never cherry-pick devel → main — it duplicates commits and makes main appear "ahead" of devel.
 
 ---
