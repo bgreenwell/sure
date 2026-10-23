@@ -1,5 +1,7 @@
 # Agent Context and Guidelines for `sure`
 
+@../CLAUDE.md
+
 This file provides context, architectural design rules, and common commands for agentic workflows in the `sure` R package.
 
 ---
@@ -61,9 +63,7 @@ Rscript -e "devtools::load_all()"
     ```
 
 ### Code Style & Naming Conventions
-*   **snake_case**: Use `snake_case` for all new functions, internal helpers, and arguments (e.g., `jitter_scale`, `get_mean_response`).
 *   **Preserve S3 Registration**: When adding or modifying S3 methods, ensure you include the `#' @export` tag in the Roxygen block so they are correctly registered in the `NAMESPACE` file.
-*   **Alias identical methods**: when two model classes need identical logic (e.g., `lrm`/`orm` share several methods), assign the method directly rather than duplicating the body — `get_bounds.orm <- get_bounds.lrm` — following the pattern already used for `plot.*`.
 
 ### Testing Guidelines
 *   **No `testthat`**: Do not introduce `testthat` code. Write all tests using the `tinytest` API in the `inst/tinytest/` directory.
