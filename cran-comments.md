@@ -27,7 +27,7 @@ models differ from earlier versions.
 * Local: macOS (aarch64), R 4.5.2, `--as-cran` with incoming checks.
 * GitHub Actions: macOS and Windows (R release); Ubuntu (R devel, release,
   oldrel-1).
-* win-builder: R-devel. RESULT
+* win-builder: R-devel.
 
 ## Reverse dependencies
 
