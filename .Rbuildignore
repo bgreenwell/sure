@@ -6,3 +6,9 @@
 ^CLAUDE\.md$
 ^codecov\.yml$
 ^_pkgdown\.yml$
+^cran-comments\.md$
+^revdep$
+^\.claude$
+^\.agents$
+^tools$
+^CRAN-SUBMISSION$

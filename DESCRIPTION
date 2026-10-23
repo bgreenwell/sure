@@ -1,18 +1,19 @@
 Package: sure
 Type: Package
 Title: Surrogate Residuals for Ordinal and General Regression Models
-Description: An implementation of the surrogate approach to residuals and 
-  diagnostics for ordinal and general regression models; for details, see Liu 
-  and Zhang (2017, <doi:https://doi.org/10.1080/01621459.2017.1292915>) and Greenwell et al. 
-  (2017, <https://journal.r-project.org/archive/2018/RJ-2018-004/index.html>). 
-  These residuals can be used to construct standard residual plots for model 
-  diagnostics (e.g., residual-vs-fitted value plots, residual-vs-covariate plots, 
-  Q-Q plots, etc.). The package also provides 'plot' methods for producing
-  standard diagnostic plots using lightweight base R graphics (via 'tinyplot').
-  The package currently supports cumulative link models from packages 'MASS',
-  'ordinal', 'rms', and 'VGAM'. Support for binary regression models using the
-  standard 'glm' function is also available.
-Version: 0.3.0.9000
+Description: An implementation of the surrogate approach to residuals and
+  diagnostics for ordinal and general regression models; for details, see Liu
+  and Zhang (2018) <doi:10.1080/01621459.2017.1292915> and Greenwell et al.
+  (2018) <doi:10.32614/RJ-2018-004>. These residuals can be used to construct
+  standard residual plots for model diagnostics (e.g., residual-vs-fitted
+  value plots, residual-vs-covariate plots, Q-Q plots, etc.). The package also
+  provides 'plot' methods for producing standard diagnostic plots using
+  lightweight base R graphics (via 'tinyplot'). The package currently
+  supports cumulative link models from packages 'MASS', 'ordinal', 'rms', and
+  'VGAM', binary and other generalized linear models fit with 'glm', and
+  multinomial models or general classifiers via a matrix of predicted class
+  probabilities.
+Version: 0.3.1
 Authors@R: c(
   person("Brandon", "Greenwell",
          email = "greenwell.brandon@gmail.com",
@@ -20,7 +21,7 @@ Authors@R: c(
   person("Andrew", "McCarthy",
          email = "mccarthyan@gmail.com",
          role = c("aut")),
-  person("Boehmke", "Bradley",
+  person("Bradley", "Boehmke",
          email = "bradleyboehmke@gmail.com",
          role = c("aut")),
   person("Liz", "Glaser",
