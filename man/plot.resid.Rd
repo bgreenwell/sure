@@ -3,7 +3,6 @@
 \name{plot.resid}
 \alias{plot.resid}
 \alias{plot.clm}
-\alias{plot.glm}
 \alias{plot.lrm}
 \alias{plot.orm}
 \alias{plot.polr}
@@ -16,7 +15,7 @@
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -32,23 +31,7 @@
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
-  ncol = NULL,
-  alpha = 1,
-  xlab = NULL,
-  ylab = NULL,
-  main = NULL,
-  smooth = TRUE,
-  ...
-)
-
-\method{plot}{glm}(
-  x,
-  y = NULL,
-  what = c("qq", "fitted", "covariate"),
-  covariate = NULL,
-  fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -64,7 +47,7 @@
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -80,7 +63,7 @@
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -96,7 +79,7 @@
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -112,7 +95,7 @@
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -124,9 +107,9 @@
 }
 \arguments{
 \item{x}{An object of class \code{"resid"} (returned by \code{\link[=resids]{resids()}}),
-or a fitted model object of class \code{\link[ordinal:clm]{ordinal::clm()}},
-\code{\link[stats:glm]{stats::glm()}}, \code{\link[rms:lrm]{rms::lrm()}}, \code{\link[rms:orm]{rms::orm()}},
-\code{\link[MASS:polr]{MASS::polr()}}, or \code{\link[VGAM:vglm]{VGAM::vglm()}}.}
+or a fitted model object of class \code{\link[ordinal:clm]{ordinal::clm()}}, \code{\link[rms:lrm]{rms::lrm()}},
+\code{\link[rms:orm]{rms::orm()}}, \code{\link[MASS:polr]{MASS::polr()}}, or \code{\link[VGAM:vglm]{VGAM::vglm()}}. For \code{\link[stats:glm]{stats::glm()}} fits,
+use \code{plot(resids(fit), fit = fit)}.}
 
 \item{y}{Ignored.}
 
@@ -136,15 +119,16 @@ which produces a quantile-quantile plot of the residuals.}
 \item{covariate}{A vector giving the covariate values to use for residual-by-
 covariate plots (i.e., when \code{what = "covariate"}).}
 
-\item{fit}{The fitted model from which the residuals were extracted. (Only
-required if \code{what = "fitted"} and \code{x} inherits from class
-\code{"resid"}.)}
+\item{fit}{The fitted model from which the residuals were extracted.
+Required if \code{what = "fitted"} and \code{x} inherits from class \code{"resid"}; when
+supplied, it also determines the default reference distribution for the
+quantile-quantile plot.}
 
 \item{distribution}{Function that computes the quantiles for the reference
-distribution to use in the quantile-quantile plot. Default is \code{qnorm}
-which is only appropriate for models using a probit link function. When
-\code{jitter_scale = "probability"}, the reference distribution is always
-U(-0.5, 0.5).}
+distribution to use in the quantile-quantile plot. Default is \code{NULL}, which
+uses U(-0.5, 0.5) for residuals obtained by jittering on the probability
+scale, the distribution implied by the link function of \code{fit} when it is
+supplied, and \code{qnorm} otherwise.}
 
 \item{ncol}{Integer specifying the number of columns to use for the plot
 layout (if requesting multiple plots). Default is \code{NULL}.}
@@ -179,6 +163,20 @@ models using \code{\link[tinyplot:tinyplot]{tinyplot::tinyplot()}} graphics.
 For \code{vglm} (and \code{vgam}) objects, the \strong{VGAM} package defines its own S4 \code{plot}
 method which will override this S3 method if \strong{VGAM} is loaded. In such cases,
 we recommend extracting the residuals first using \code{resids()} and then plotting the
-resulting \code{resid} object (e.g. \code{plot(resids(fit))}), which will correctly dispatch
-to \code{plot.resid()}.
+resulting \code{resid} object (e.g. \code{plot(resids(fit), fit = fit)}), which will
+correctly dispatch to \code{plot.resid()}.
+
+There is no \code{plot()} method for \code{glm} objects, since it would replace the
+standard diagnostic plots from \code{\link[stats:plot.lm]{stats::plot.lm()}}. Use
+\code{plot(resids(fit), fit = fit)} instead.
+}
+\examples{
+set.seed(101)
+df <- sim_data(n = 500, type = "quadratic")
+fit <- glm(y ~ x, data = df, family = binomial(link = "probit"))
+if (requireNamespace("tinyplot", quietly = TRUE)) {
+  plot(resids(fit), fit = fit, what = c("qq", "covariate"),
+       covariate = df$x)
+}
+
 }

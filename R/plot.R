@@ -4,22 +4,23 @@
 #' models using [tinyplot::tinyplot()] graphics.
 #'
 #' @param x An object of class `"resid"` (returned by [sure::resids()]),
-#' or a fitted model object of class [ordinal::clm()],
-#' [stats::glm()], [rms::lrm()], [rms::orm()],
-#' [MASS::polr()], or [VGAM::vglm()].
+#' or a fitted model object of class [ordinal::clm()], [rms::lrm()],
+#' [rms::orm()], [MASS::polr()], or [VGAM::vglm()]. For [stats::glm()] fits,
+#' use `plot(resids(fit), fit = fit)`.
 #' @param y Ignored.
 #' @param what Character string specifying what to plot. Default is `"qq"`
 #' which produces a quantile-quantile plot of the residuals.
 #' @param covariate A vector giving the covariate values to use for residual-by-
 #' covariate plots (i.e., when `what = "covariate"`).
-#' @param fit The fitted model from which the residuals were extracted. (Only
-#' required if `what = "fitted"` and `x` inherits from class
-#' `"resid"`.)
+#' @param fit The fitted model from which the residuals were extracted.
+#' Required if `what = "fitted"` and `x` inherits from class `"resid"`; when
+#' supplied, it also determines the default reference distribution for the
+#' quantile-quantile plot.
 #' @param distribution Function that computes the quantiles for the reference
-#' distribution to use in the quantile-quantile plot. Default is `qnorm`
-#' which is only appropriate for models using a probit link function. When
-#' `jitter_scale = "probability"`, the reference distribution is always
-#' U(-0.5, 0.5).
+#' distribution to use in the quantile-quantile plot. Default is `NULL`, which
+#' uses U(-0.5, 0.5) for residuals obtained by jittering on the probability
+#' scale, the distribution implied by the link function of `fit` when it is
+#' supplied, and `qnorm` otherwise.
 #' @param ncol Integer specifying the number of columns to use for the plot
 #' layout (if requesting multiple plots). Default is `NULL`.
 #' @param alpha A single value in the interval \verb{[0, 1]} controlling the
@@ -41,8 +42,21 @@
 #' For `vglm` (and `vgam`) objects, the **VGAM** package defines its own S4 `plot`
 #' method which will override this S3 method if **VGAM** is loaded. In such cases,
 #' we recommend extracting the residuals first using `resids()` and then plotting the
-#' resulting `resid` object (e.g. `plot(resids(fit))`), which will correctly dispatch
-#' to `plot.resid()`.
+#' resulting `resid` object (e.g. `plot(resids(fit), fit = fit)`), which will
+#' correctly dispatch to `plot.resid()`.
+#'
+#' There is no `plot()` method for `glm` objects, since it would replace the
+#' standard diagnostic plots from [stats::plot.lm()]. Use
+#' `plot(resids(fit), fit = fit)` instead.
+#'
+#' @examples
+#' set.seed(101)
+#' df <- sim_data(n = 500, type = "quadratic")
+#' fit <- glm(y ~ x, data = df, family = binomial(link = "probit"))
+#' if (requireNamespace("tinyplot", quietly = TRUE)) {
+#'   plot(resids(fit), fit = fit, what = c("qq", "covariate"),
+#'        covariate = df$x)
+#' }
 #'
 #' @rdname plot.resid
 #'
@@ -58,7 +72,7 @@ plot.resid <- function(
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -151,6 +165,15 @@ plot.resid <- function(
         stop("Q-Q plots are not available for jittering on the response scale.")
       }
     }
+    if (is.null(distribution)) {
+      distribution <- if (!is.null(attr(x, "jitter_scale"))) {
+        function(p) qunif(p, min = -0.5, max = 0.5)
+      } else if (!is.null(fit)) {
+        get_quantile_function(fit)
+      } else {
+        qnorm
+      }
+    }
     distribution <- match.fun(distribution)
     xvals <- distribution(stats::ppoints(length(res.med)))[order(order(res.med))]
     qqline.y <- stats::quantile(res.med, probs = c(0.25, 0.75),
@@ -227,7 +250,7 @@ plot.clm <- function(
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -240,36 +263,19 @@ plot.clm <- function(
   # Compute residuals
   res <- resids(x, ...)
 
-  # Quantile function to use for Q-Q plots
-  qfun <- if (is.null(attr(res, "jitter_scale"))) {
-    get_quantile_function(x)
-  } else {
-    if ("qq" %in% what && attr(res, "jitter_scale") == "response") {
-      stop("Quantile-quantile plots are not appropriate for residuals ",
-           "obtained by jittering on the response scale.")
-    }
-    function(p) qunif(p, min = -0.5, max = 0.5)
-  }
-
   # Default x-axis label
-  if (is.null(xlab)) {
+  if (is.null(xlab) && !is.null(covariate)) {
     xlab <- deparse(substitute(covariate))
   }
 
   # Call the default method
   plot.resid(
-    res, what = what, covariate = covariate, distribution = qfun, fit = x, ncol = ncol,
+    res, what = what, covariate = covariate, distribution = distribution,
+    fit = x, ncol = ncol,
     alpha = alpha, xlab = xlab, ylab = ylab, main = main, smooth = smooth, ...
   )
 
 }
-
-
-#' @rdname plot.resid
-#'
-#' @method plot glm
-#' @export
-plot.glm <- plot.clm
 
 
 #' @rdname plot.resid
