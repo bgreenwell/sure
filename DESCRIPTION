@@ -13,7 +13,7 @@ Description: An implementation of the surrogate approach to residuals and
   'VGAM', binary and other generalized linear models fit with 'glm', and
   multinomial models or general classifiers via a matrix of predicted class
   probabilities.
-Version: 0.3.1
+Version: 0.3.1.9000
 Authors@R: c(
   person("Brandon", "Greenwell",
          email = "greenwell.brandon@gmail.com",
