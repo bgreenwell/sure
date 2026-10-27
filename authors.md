@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/bgreenwell/sure/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/bgreenwell/sure/blob/v0.3.1/inst/CITATION)
 
 Greenwell B, McCarthy A, Boehmke B, Liu D (2018). “Residuals and
 Diagnostics for Binary and Ordinal Regression Models: An Introduction to
