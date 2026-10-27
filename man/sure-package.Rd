@@ -4,29 +4,25 @@
 \name{sure-package}
 \alias{sure}
 \alias{sure-package}
-\title{sure: An R package for constructing surrogate-based residuals and diagnostics
-for ordinal and general regression models.}
+\title{sure: Surrogate Residuals for Ordinal and General Regression Models}
 \description{
 The \code{sure} package provides surrogate-based residuals for fitted ordinal
 and general (e.g., binary) regression models of class
-\code{\link[ordinal:clm]{ordinal::clm()}}, \code{\link[stats:glm]{stats::glm()}}, \code{\link[rms:lrm]{rms::lrm()}},
-\code{\link[rms:orm]{rms::orm()}}, \code{\link[MASS:polr]{MASS::polr()}}, or
-\code{\link[VGAM:vglm]{VGAM::vglm()}}.
-}
-\details{
-The development version can be found on GitHub:
-\url{https://github.com/bgreenwell/sure}. As of right now, \code{sure} exports the
-following functions:
-\itemize{
-\item \code{resids()} - construct (surrogate-based) residuals;
-\item \code{plot()} - plot diagnostics using \code{\link[tinyplot:tinyplot]{tinyplot::tinyplot()}}-based graphics;
-\item \code{gof()} - simulate p-values from a goodness-of-fit test.
-}
+\code{\link[ordinal:clm]{ordinal::clm()}}, \code{\link[stats:glm]{stats::glm()}}, \code{\link[rms:lrm]{rms::lrm()}}, \code{\link[rms:orm]{rms::orm()}},
+\code{\link[MASS:polr]{MASS::polr()}}, or \code{\link[VGAM:vglm]{VGAM::vglm()}}, as well as multinomial models and
+general classifiers via a matrix of predicted class probabilities. Start
+with \code{\link[=resids]{resids()}}, then plot the result with \code{\link[=plot.resid]{plot.resid()}}.
 }
 \references{
 Liu, Dungang and Zhang, Heping. Residuals and Diagnostics for Ordinal
 Regression Models: A Surrogate Approach.
-\emph{Journal of the American Statistical Association} (accepted).
+\emph{Journal of the American Statistical Association}, 113(522), 845-854, 2018.
+\doi{10.1080/01621459.2017.1292915}
+
+Greenwell, Brandon M., McCarthy, Andrew J., Boehmke, Bradley C. and Liu,
+Dungang. Residuals and Diagnostics for Binary and Ordinal Regression Models:
+An Introduction to the sure Package. \emph{The R Journal}, 10(1), 2018.
+\doi{10.32614/RJ-2018-004}
 }
 \seealso{
 Useful links:
@@ -44,7 +40,7 @@ Useful links:
 Authors:
 \itemize{
   \item Andrew McCarthy \email{mccarthyan@gmail.com}
-  \item Boehmke Bradley \email{bradleyboehmke@gmail.com}
+  \item Bradley Boehmke \email{bradleyboehmke@gmail.com}
 }
 
 Other contributors:
