@@ -1,5 +1,33 @@
 # Changelog
 
+## sure 0.3.1
+
+CRAN release: 2026-10-24
+
+### Changed
+
+- [`plot.resid()`](https://bgreenwell.github.io/sure/reference/plot.resid.md)
+  now picks its default Q-Q reference distribution from `fit` when
+  supplied (`distribution` defaults to `NULL`).
+
+### Removed
+
+- Removed the [`plot()`](https://rdrr.io/r/graphics/plot.default.html)
+  method for `glm` objects, which replaced the standard
+  [`stats::plot.lm()`](https://rdrr.io/r/stats/plot.lm.html) diagnostics
+  once sure was loaded; use `plot(resids(fit), fit = fit)` instead.
+
+### Fixed
+
+- Fixed surrogate residuals for binary `glm` fits with a `cloglog` link,
+  which used the wrong Gumbel orientation for the latent distribution
+  ([\#45](https://github.com/bgreenwell/sure/issues/45)).
+- Fixed the Q-Q x-axis label reading `NULL` when calling
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) on a fitted
+  model without a covariate.
+- Fixed citation metadata (author names, DOIs) in `CITATION`,
+  `DESCRIPTION`, and references.
+
 ## sure 0.3.0
 
 ### Added
@@ -47,14 +75,10 @@
 - Rewrote the stale `DESCRIPTION` paragraph describing the removed
   ggplot2-based `autoplot()`.
 
-### Deprecated
-
-- Deprecated the `ggplot2`-based `autoplot()` methods in favor of
-  standard [`plot()`](https://rdrr.io/r/graphics/plot.default.html) S3
-  methods.
-
 ### Removed
 
+- Removed the `ggplot2`-based `autoplot()` methods in favor of standard
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) S3 methods.
 - Removed `ggplot2` and `gridExtra` package dependencies from `Imports`.
 - Removed `testthat` testing framework and rebuilt the entire test suite
   using `tinytest`.
@@ -93,21 +117,20 @@
 
 ## sure 0.2.2
 
-- Incorporated [pkgdown
-  website](https://koalaverse.github.io/sure/index.html).
+- Incorporated pkgdown website.
 
 - Added paper URLs and ORCIDs to DESCRIPTION file
-  [(](https://github.com/koalaverse/sure/issues/30)[\#30](https://github.com/bgreenwell/sure/issues/30)).
+  [(](https://github.com/bgreenwell/sure/issues/30)[\#30](https://github.com/bgreenwell/sure/issues/30)).
 
 - Added `sure` vignette
 
 - incorporated autoplot methods for glm, lrm, orm, polr, vglm
 
 - `autoplot()` can now return multiple plots
-  [(](https://github.com/koalaverse/sure/issues/16)[\#16](https://github.com/bgreenwell/sure/issues/16)).
+  [(](https://github.com/bgreenwell/sure/issues/16)[\#16](https://github.com/bgreenwell/sure/issues/16)).
 
 - Specifying `method = "latent"` now works for binomial GLMs
-  [(27)](https://github.com/koalaverse/sure/issues/27).
+  [(](https://github.com/bgreenwell/sure/issues/27)[\#27](https://github.com/bgreenwell/sure/issues/27)).
 
 - Specifying `method = "jittering"` now issues a warning (at least until
   it has been fully tested).
@@ -124,7 +147,7 @@ CRAN release: 2017-09-19
 - Jittering (on both the probability scale and the response scale) is
   now available for fitted cumulative link models based on packages
   `MASS`, `ordinal`, `rms`, and `VGAM`
-  [(](https://github.com/koalaverse/sure/issues/18)[\#18](https://github.com/bgreenwell/sure/issues/18)).
+  [(](https://github.com/bgreenwell/sure/issues/18)[\#18](https://github.com/bgreenwell/sure/issues/18)).
 
 - Added support for vector generalized additive models from the `VGAM`
   package (i.e., objects of class `"vgam"`).

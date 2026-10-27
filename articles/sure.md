@@ -955,7 +955,7 @@ Agresti, Alan. 2010. *Analysis of Ordinal Categorical Data*. Wiley
 Series in Probability and Statistics. Wiley.
 
 Christensen, R. H. B. 2015. *Ordinal—Regression Models for Ordinal
-Data*. <http://www.cran.r-project.org/package=ordinal>.
+Data*. <https://CRAN.R-project.org/package=ordinal>.
 
 Dupont, Charles, Jeffrey Horner, Chun Li, Qi Liu, and Bryan Shepherd.
 2016. *PResiduals: Probability-Scale Residuals and Residual
@@ -963,7 +963,7 @@ Correlations*. <https://CRAN.R-project.org/package=PResiduals>.
 
 Efron, B. 1979. “Bootstrap Methods: Another Look at the Jackknife.”
 *Annals Fo Statistics* 7 (1): 1–26.
-<http://dx.doi.org/10.1214/aos/1176344552>.
+<https://doi.org/10.1214/aos/1176344552>.
 
 Greenwell, Brandon, Andrew McCarthy, and Brad Boehmke. 2017. *Sure:
 Surrogate Residuals for Ordinal and General Regression Models*.
@@ -978,24 +978,24 @@ Harrell Jr, Frank E. 2017. *Rms: Regression Modeling Strategies*.
 
 Li, Chun, and Bryan E. Shepherd. 2012. “A New Residual for Ordinal
 Outcomes.” *Biometrika* 99 (2): 473–80.
-<http://dx.doi.org/10.1093/biomet/asr073>.
+<https://doi.org/10.1093/biomet/asr073>.
 
 Liu, Dungang, and Heping Zhang. 2017. “Residuals and Diagnostics for
 Ordinal Regression Models: A Surrogate Approach.” *Journal of the
 American Statistical Association* 0 (ja): 0–0.
-<http://dx.doi.org/10.1080/01621459.2017.1292915>.
+<https://doi.org/10.1080/01621459.2017.1292915>.
 
 Liu, Ivy, Bhramar Mukherjee, Thomas Suesse, David Sparrow, and Sung Kyun
 Park. 2009. “Graphical Diagnostics to Check Model Misspecification for
 the Proportional Odds Regression Model.” *Statistics in Medicine* 28
-(3): 412–29. <http://dx.doi.org/10.1080/01621459.2017.1292915>.
+(3): 412–29. <https://doi.org/10.1080/01621459.2017.1292915>.
 
 Randall, J. H. 1989. “The Analysis of Sensory Data by Generalized Linear
 Model.” *Biometrical Journal* 31 (7): 781–93.
-<http://dx.doi.org/10.1002/bimj.4710310703>.
+<https://doi.org/10.1002/bimj.4710310703>.
 
 Venables, W. N., and B. D. Ripley. 2002. *Modern Applied Statistics with
-s*. Fourth. Springer. <http://www.stats.ox.ac.uk/pub/MASS4>.
+s*. Fourth. Springer. <https://www.stats.ox.ac.uk/pub/MASS4/>.
 
 Yee, Thomas W. 2017. *VGAM: Vector Generalized Linear and Additive
 Models*. <https://CRAN.R-project.org/package=VGAM>.

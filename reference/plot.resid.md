@@ -15,7 +15,7 @@ plot(
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -32,24 +32,7 @@ plot(
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
-  ncol = NULL,
-  alpha = 1,
-  xlab = NULL,
-  ylab = NULL,
-  main = NULL,
-  smooth = TRUE,
-  ...
-)
-
-# S3 method for class 'glm'
-plot(
-  x,
-  y = NULL,
-  what = c("qq", "fitted", "covariate"),
-  covariate = NULL,
-  fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -66,7 +49,7 @@ plot(
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -83,7 +66,7 @@ plot(
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -100,7 +83,7 @@ plot(
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -117,7 +100,7 @@ plot(
   what = c("qq", "fitted", "covariate"),
   covariate = NULL,
   fit = NULL,
-  distribution = qnorm,
+  distribution = NULL,
   ncol = NULL,
   alpha = 1,
   xlab = NULL,
@@ -136,11 +119,12 @@ plot(
   [`resids()`](https://bgreenwell.github.io/sure/reference/resids.md)),
   or a fitted model object of class
   [`ordinal::clm()`](https://rdrr.io/pkg/ordinal/man/clm.html),
-  [`stats::glm()`](https://rdrr.io/r/stats/glm.html),
   [`rms::lrm()`](https://rdrr.io/pkg/rms/man/lrm.html),
   [`rms::orm()`](https://rdrr.io/pkg/rms/man/orm.html),
   [`MASS::polr()`](https://rdrr.io/pkg/MASS/man/polr.html), or
-  [`VGAM::vglm()`](https://rdrr.io/pkg/VGAM/man/vglm.html).
+  [`VGAM::vglm()`](https://rdrr.io/pkg/VGAM/man/vglm.html). For
+  [`stats::glm()`](https://rdrr.io/r/stats/glm.html) fits, use
+  `plot(resids(fit), fit = fit)`.
 
 - y:
 
@@ -158,16 +142,18 @@ plot(
 
 - fit:
 
-  The fitted model from which the residuals were extracted. (Only
-  required if `what = "fitted"` and `x` inherits from class `"resid"`.)
+  The fitted model from which the residuals were extracted. Required if
+  `what = "fitted"` and `x` inherits from class `"resid"`; when
+  supplied, it also determines the default reference distribution for
+  the quantile-quantile plot.
 
 - distribution:
 
   Function that computes the quantiles for the reference distribution to
-  use in the quantile-quantile plot. Default is `qnorm` which is only
-  appropriate for models using a probit link function. When
-  `jitter_scale = "probability"`, the reference distribution is always
-  U(-0.5, 0.5).
+  use in the quantile-quantile plot. Default is `NULL`, which uses
+  U(-0.5, 0.5) for residuals obtained by jittering on the probability
+  scale, the distribution implied by the link function of `fit` when it
+  is supplied, and `qnorm` otherwise.
 
 - ncol:
 
@@ -216,5 +202,24 @@ For `vglm` (and `vgam`) objects, the **VGAM** package defines its own S4
 `plot` method which will override this S3 method if **VGAM** is loaded.
 In such cases, we recommend extracting the residuals first using
 [`resids()`](https://bgreenwell.github.io/sure/reference/resids.md) and
-then plotting the resulting `resid` object (e.g. `plot(resids(fit))`),
-which will correctly dispatch to `plot.resid()`.
+then plotting the resulting `resid` object (e.g.
+`plot(resids(fit), fit = fit)`), which will correctly dispatch to
+`plot.resid()`.
+
+There is no [`plot()`](https://rdrr.io/r/graphics/plot.default.html)
+method for `glm` objects, since it would replace the standard diagnostic
+plots from [`stats::plot.lm()`](https://rdrr.io/r/stats/plot.lm.html).
+Use `plot(resids(fit), fit = fit)` instead.
+
+## Examples
+
+``` r
+set.seed(101)
+df <- sim_data(n = 500, type = "quadratic")
+fit <- glm(y ~ x, data = df, family = binomial(link = "probit"))
+if (requireNamespace("tinyplot", quietly = TRUE)) {
+  plot(resids(fit), fit = fit, what = c("qq", "covariate"),
+       covariate = df$x)
+}
+
+```

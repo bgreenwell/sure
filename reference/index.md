@@ -27,7 +27,6 @@ tinyplot).
 
 - [`plot(`*`<resid>`*`)`](https://bgreenwell.github.io/sure/reference/plot.resid.md)
   [`plot(`*`<clm>`*`)`](https://bgreenwell.github.io/sure/reference/plot.resid.md)
-  [`plot(`*`<glm>`*`)`](https://bgreenwell.github.io/sure/reference/plot.resid.md)
   [`plot(`*`<lrm>`*`)`](https://bgreenwell.github.io/sure/reference/plot.resid.md)
   [`plot(`*`<orm>`*`)`](https://bgreenwell.github.io/sure/reference/plot.resid.md)
   [`plot(`*`<polr>`*`)`](https://bgreenwell.github.io/sure/reference/plot.resid.md)

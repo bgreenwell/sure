@@ -1,4 +1,4 @@
-# sure: An R package for constructing surrogate-based residuals and diagnostics for ordinal and general regression models.
+# sure: Surrogate Residuals for Ordinal and General Regression Models
 
 The `sure` package provides surrogate-based residuals for fitted ordinal
 and general (e.g., binary) regression models of class
@@ -7,30 +7,24 @@ and general (e.g., binary) regression models of class
 [`rms::lrm()`](https://rdrr.io/pkg/rms/man/lrm.html),
 [`rms::orm()`](https://rdrr.io/pkg/rms/man/orm.html),
 [`MASS::polr()`](https://rdrr.io/pkg/MASS/man/polr.html), or
-[`VGAM::vglm()`](https://rdrr.io/pkg/VGAM/man/vglm.html).
-
-## Details
-
-The development version can be found on GitHub:
-<https://github.com/bgreenwell/sure>. As of right now, `sure` exports
-the following functions:
-
-- [`resids()`](https://bgreenwell.github.io/sure/reference/resids.md) -
-  construct (surrogate-based) residuals;
-
-- [`plot()`](https://rdrr.io/r/graphics/plot.default.html) - plot
-  diagnostics using
-  [`tinyplot::tinyplot()`](https://grantmcdermott.com/tinyplot/man/tinyplot.html)-based
-  graphics;
-
-- [`gof()`](https://bgreenwell.github.io/sure/reference/gof.md) -
-  simulate p-values from a goodness-of-fit test.
+[`VGAM::vglm()`](https://rdrr.io/pkg/VGAM/man/vglm.html), as well as
+multinomial models and general classifiers via a matrix of predicted
+class probabilities. Start with
+[`resids()`](https://bgreenwell.github.io/sure/reference/resids.md),
+then plot the result with
+[`plot.resid()`](https://bgreenwell.github.io/sure/reference/plot.resid.md).
 
 ## References
 
 Liu, Dungang and Zhang, Heping. Residuals and Diagnostics for Ordinal
 Regression Models: A Surrogate Approach. *Journal of the American
-Statistical Association* (accepted).
+Statistical Association*, 113(522), 845-854, 2018.
+[doi:10.1080/01621459.2017.1292915](https://doi.org/10.1080/01621459.2017.1292915)
+
+Greenwell, Brandon M., McCarthy, Andrew J., Boehmke, Bradley C. and Liu,
+Dungang. Residuals and Diagnostics for Binary and Ordinal Regression
+Models: An Introduction to the sure Package. *The R Journal*, 10(1),
+2018. [doi:10.32614/RJ-2018-004](https://doi.org/10.32614/RJ-2018-004)
 
 ## See also
 
@@ -52,7 +46,7 @@ Authors:
 
 - Andrew McCarthy <mccarthyan@gmail.com>
 
-- Boehmke Bradley <bradleyboehmke@gmail.com>
+- Bradley Boehmke <bradleyboehmke@gmail.com>
 
 Other contributors:
 

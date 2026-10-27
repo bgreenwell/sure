@@ -92,12 +92,13 @@ For `"glm"` objects, only the
 
 Liu, Dungang and Zhang, Heping. Residuals and Diagnostics for Ordinal
 Regression Models: A Surrogate Approach. *Journal of the American
-Statistical Association* (accepted). URL
-http://www.tandfonline.com/doi/abs/10.1080/01621459.2017.1292915?journalCode=uasa20
+Statistical Association*, 113(522), 845-854, 2018.
+[doi:10.1080/01621459.2017.1292915](https://doi.org/10.1080/01621459.2017.1292915)
 
 Nadarajah, Saralees and Kotz, Samuel. R Programs for Truncated
-Distributions. *Journal of Statistical Software, Code Snippet*, 16(2),
-1-8, 2006. URL https://www.jstatsoft.org/v016/c02.
+Distributions. *Journal of Statistical Software, Code Snippets*, 16(2),
+1-8, 2006.
+[doi:10.18637/jss.v016.c02](https://doi.org/10.18637/jss.v016.c02)
 
 ## Examples
 
